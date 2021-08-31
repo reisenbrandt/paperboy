@@ -1,6 +1,7 @@
 import { Box, Button, Container, TextField, AppBar } from '@material-ui/core'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import NavBar from '../components/NavBar'
 
 export default function SearchPage() {
   // const [results, setResults ] = useState([]);
@@ -15,6 +16,7 @@ export default function SearchPage() {
   // }
   return (
     <Box>
+      <NavBar />
       <Container>
       <AppBar />
         <TextField id="outlined-basic" label="Search" variant="outlined" /><br />

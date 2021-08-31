@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SearchPage from './pages/SearchPage';
 import Results from './pages/Results';
+import TopHeadlines from './pages/TopHeadlines';
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
           </Route>
           <Route path="/results">
             <Results />
+          </Route>
+          <Route path="/topHeadlines">
+            <TopHeadlines />
           </Route>
         </Switch>
       </div>

@@ -1,9 +1,13 @@
-import { Container, Grid, makeStyles, Paper } from '@material-ui/core';
+import { Container, Grid, makeStyles, Paper, Typography, Box } from '@material-ui/core';
 import React from 'react';
+import moment from 'moment';
+import NavBar from '../components/NavBar';
+
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: "50px"
   },
   paper: {
     width: "500px",
@@ -11,7 +15,7 @@ const useStyles = makeStyles({
     minHeight: "550px",
   },
   title: {
-    margin: "10px 4px 0 4px"
+    padding: "8px",
   },
   author: {
     margin: "0"
@@ -21,7 +25,7 @@ const useStyles = makeStyles({
     maxHeight: "300px"
   }, 
   description: {
-    padding: "0 4px 0 4px"
+    padding: "8px"
   }
 })
 
@@ -300,21 +304,26 @@ export default function Results() {
   }
 
   return (
-    <Container className={classes.root}>
-      <Grid item xs={12}>
-        <Grid container direction="row" justifyContent="center" spacing={2}>
-          {newsData.map((news, index) => (
-            <Grid key={index} item>
-              <Paper className={classes.paper}>
-                <img className={classes.image} src={renderImage(news.urlToImage)} alt=""/>
-                <h3 className={classes.title}>{news.title}</h3>
-                <h4>By: {news.author}</h4>
-                <h5 className={classes.description}>{news.description}</h5> 
-              </Paper>
-            </Grid>
-          ))}
+    <Box>
+      <NavBar />
+      <Container className={classes.root}>
+        <Grid item xs={12}>
+          <Grid container direction="row" justifyContent="center" spacing={2}>
+            {newsData.map((news, index) => (
+              <Grid key={index} item>
+                <Paper className={classes.paper}>
+                  <img className={classes.image} src={renderImage(news.urlToImage)} alt=""/>
+                  <Typography variant="h6" className={classes.title}>
+                    <a href={news.url}>{news.title}</a>
+                  </Typography>
+                  <Typography variant="subtitle2">By: {news.author} on {moment(`${news.publishedAt}`).format('LLL')}</Typography>
+                  <Typography variant="body" className={classes.description}>{news.description}</Typography> 
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Box>
   )
 }
