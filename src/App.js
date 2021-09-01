@@ -12,7 +12,7 @@ function App() {
           <Route exact path="/">
             <SearchPage />
           </Route>
-          <Route path="/results">
+          <Route path="/results/:category?/:searchTerm?">
             <Results />
           </Route>
           <Route path="/topHeadlines">

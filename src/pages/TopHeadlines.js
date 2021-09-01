@@ -33,13 +33,13 @@ export default function TopHeadlines() {
   const [results, setResults ] = useState([])
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=c2791b40ded74e80945c31d37b320e2a')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setResults(data.articles)
-  //     })
-  // }, [])
+  useEffect(() => {
+    fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=c2791b40ded74e80945c31d37b320e2a')
+      .then(res => res.json())
+      .then(data => {
+        setResults(data.articles)
+      })
+  }, [])
 
   function renderImage(image) {
     if (!image) {
