@@ -1,8 +1,8 @@
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SearchPage from './pages/SearchPage';
 import Results from './pages/Results';
 import TopHeadlines from './pages/TopHeadlines';
+import './App.css';
 
 function App() {
   return (

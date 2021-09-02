@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "column",
-    padding: "8px 8px 8px 8px",
+    padding: "16px 8px 8px 8px",
     backgroundColor: "rgba(0, 0, 0, 0.1)",
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.2)"
@@ -87,15 +87,17 @@ export default function TopHeadlines() {
                 {results.map((result, index) => {
                   return (<Grid key={index} item>
                     <Paper className={classes.paper}>
+                      <a href={result.url} className={classes.linkOverride}>
                       <span>
                         <Typography variant="h6" className={classes.title} title={result.title}>
-                          <a href={result.url} className={classes.linkOverride}>{result.title}</a></Typography>
+                          {result.title}</Typography>
                         <img className={classes.image} src={renderImage(result.urlToImage)} alt=""/>
                         <Typography variant="subtitle2">By: {result.author} on {moment(`${result.publishedAt}`).format('LLL')}</Typography>
                       </span>
                       <span>
                         <Typography variant="body" className={classes.description}>{result.description}</Typography> 
                       </span>
+                      </a>
                     </Paper>
                   </Grid>
                 )})}

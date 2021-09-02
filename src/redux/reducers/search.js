@@ -1,6 +1,6 @@
 export function search(state = {
   term: '',
-  startDate: '2021-08-02',
+  startDate: '2021-08-15',
   endDate: '2021-09-02',
   results: []
   }, action) {

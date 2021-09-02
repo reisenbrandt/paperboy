@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "column",
-    padding: "8px 8px 8px 8px",
+    padding: "16px 8px 8px 8px",
     backgroundColor: "rgba(0, 0, 0, 0.1)",
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.2)"
