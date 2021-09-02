@@ -1,39 +1,67 @@
-import { Container, Grid, makeStyles, Paper, Typography, Box } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import { Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import NavBar from '../components/NavBar';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionSetResults } from '../redux/actions/search';
 
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1,
-    marginTop: "50px"
+    marginTop: "32px",
+    maxWidth: "1900px",
+    height: "475px",
+    padding: "16px"
   },
   paper: {
-    width: "500px",
+    width: "525px",
     textAlign: "center",
-    minHeight: "550px",
+    height: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "column",
+    padding: "8px 8px 8px 8px",
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.2)"
+    }
   },
   title: {
-    padding: "8px",
+    width: "480px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    lineHeight: "1.2em",
+    height: "3em",
+    display: "-webkit-box",
+    "-webkit-box-orient": "vertical",
+    "-webkit-line-clamp": 2,
+    paddingBottom: "12px"
   },
   author: {
     margin: "0"
   },
   image: {
     width: "450px",
-    maxHeight: "300px"
+    maxHeight: "300px",
+    border: "2px solid #666",
+    borderRadius: "4px",
+    margin: "8px"
   }, 
   description: {
-    padding: "8px"
+  },
+  linkOverride: {
+    color: "black",
+    textDecoration: "none"
   }
 })
 
 
 export default function Results() {
   const { category, searchTerm } = useParams();
-  const [ results, setResults ] = useState([])
+
+  const results = useSelector(state => state.search.results)
+  const dispatch = useDispatch();
   // const newsData = [
   //   {
   //       "source": {
@@ -302,10 +330,9 @@ export default function Results() {
     fetch(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&q=${searchTerm}&apiKey=c2791b40ded74e80945c31d37b320e2a`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
-        setResults(data.articles)
+        dispatch(actionSetResults(data.articles))
       })
-  }, [category , searchTerm])
+  }, [category, searchTerm, dispatch])
 
   function renderImage(image) {
     if (!image) {
@@ -316,27 +343,29 @@ export default function Results() {
   }
 
   return (
-    <Box>
+    <>
       <NavBar />
-      <Container className={classes.root}>
-        <Grid item xs={12}>
-          <Grid container direction="row" justifyContent="center" spacing={2}>
-            {results.map((news, index) => {
-              return (
-              <Grid key={index} item>
-                <Paper className={classes.paper}>
-                  <img className={classes.image} src={renderImage(news.urlToImage)} alt=""/>
-                  <Typography variant="h6" className={classes.title}>
-                    <a href={news.url}>{news.title}</a>
-                  </Typography>
-                  <Typography variant="subtitle2">By: {news.author} on {moment(`${news.publishedAt}`).format('LLL')}</Typography>
-                  <Typography variant="body" className={classes.description}>{news.description}</Typography> 
-                </Paper>
+        <Container className={classes.root}>
+          <Grid item xs={12}>
+              <Grid container direction="row" justifyContent="center" spacing={5}>
+                {results.map((result, index) => {
+                  return (<Grid key={index} item>
+                    <Paper className={classes.paper}>
+                      <span>
+                        <Typography variant="h6" className={classes.title} title={result.title}>
+                          <a href={result.url} className={classes.linkOverride}>{result.title}</a></Typography>
+                        <img className={classes.image} src={renderImage(result.urlToImage)} alt=""/>
+                        <Typography variant="subtitle2">By: {result.author} on {moment(`${result.publishedAt}`).format('LLL')}</Typography>
+                      </span>
+                      <span>
+                        <Typography variant="body" className={classes.description}>{result.description}</Typography> 
+                      </span>
+                    </Paper>
+                  </Grid>
+                )})}
               </Grid>
-              )})}
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+            </Grid>
+        </Container>
+    </>
   )
 }

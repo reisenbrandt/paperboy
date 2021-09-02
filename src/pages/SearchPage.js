@@ -1,7 +1,9 @@
-import { Box, Button, Container, TextField, makeStyles, FormControl, InputLabel, NativeSelect } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Button, Container, TextField, makeStyles, FormControl, InputLabel, NativeSelect } from '@material-ui/core';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
+import { actionSetCategory, actionSetSearch } from '../redux/actions/search';
 
 const useStyles = makeStyles({
   root: {
@@ -13,24 +15,26 @@ const useStyles = makeStyles({
     width: "75%"
   },
   searchButton: {
-    height: "1.1876em",
+    height: "56px",
     padding: "18.5px 14px",
     margin: 0
   },
   menuItem: {
     width: "200px"
+  },
+  categories: {
+    padding: "15px 0px 0px 14px"
   }
-  // categories: {
-  //   border: "1px solid black"
-  // }
 })
 
 export default function SearchPage() {
-  const [ searchTerm, setSearchTerm ] = useState('');
-  const [ category, setCategory ] = useState('');
+  const searchTerm = useSelector(state => state.search.term)
+  const category = useSelector(state => state.search.category)
+  const dispatch = useDispatch();
+
   const classes = useStyles();
+  
   const categories = [
-    "",
     "Business",
     "Entertainment",
     "General",
@@ -40,27 +44,25 @@ export default function SearchPage() {
     "Technology"
   ]
 
-  const handleChange = (event) => {
-    setCategory(event.target.value)
+  const handleChange = (e) => {
+    dispatch(actionSetCategory(e.target.value))
   };
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value)
+    dispatch(actionSetSearch(e.target.value))
   }
 
-  
-
   return (
-    <Box>
+    <>
       <NavBar />
       <Container className={classes.root}>
-        <TextField id="outlined-basic" label="Search" variant="outlined" className={classes.textField} onChange={handleSearch} value={searchTerm} />
-        <Button variant="outlined"><Link to={`/results/${category}/${searchTerm}`} className={classes.searchButton}>Search</Link></Button>
+          <TextField id="outlined-basic" label="Search" variant="outlined" className={classes.textField} onChange={handleSearch} value={searchTerm} />
+          <Button variant="outlined" className={classes.searchButton}><Link to={`/results/${category}/${searchTerm}`}>Search</Link></Button>
         <Container className={classes.categories}>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-autowidth-label">Categories:</InputLabel>
             <NativeSelect
-              labelId="demo-simple-select-autowidth-label"
+              labelid="demo-simple-select-autowidth-label"
               id="demo-simple-select"
               value={category}
               onChange={handleChange}
@@ -73,6 +75,6 @@ export default function SearchPage() {
           </FormControl>
         </Container>
       </Container>
-    </Box>
+    </>
   )
 }
