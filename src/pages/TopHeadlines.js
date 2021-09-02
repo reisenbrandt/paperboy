@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 
 export default function TopHeadlines() {
   const results = useSelector(state => state.search.results);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
 
   const classes = useStyles();
 
@@ -76,6 +76,10 @@ export default function TopHeadlines() {
     } else {
       return image
     }
+  }
+
+  if (!results) {
+    return 'Loading...'
   }
 
   return (
