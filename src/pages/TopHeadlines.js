@@ -95,7 +95,7 @@ export default function TopHeadlines() {
                         <Typography variant="subtitle2">By: {result.author} on {moment(`${result.publishedAt}`).format('LLL')}</Typography>
                       </span>
                       <span>
-                        <Typography variant="body" className={classes.description}>{result.description}</Typography> 
+                        <Typography variant="body1" className={classes.description}>{result.description}</Typography> 
                       </span>
                       </a>
                     </Paper>

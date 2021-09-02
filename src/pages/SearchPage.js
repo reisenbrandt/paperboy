@@ -99,7 +99,7 @@ export default function SearchPage() {
         </form>
         <form className={classes.container} noValidate>
         <TextField
-            id="date"
+            id="date1"
             label="End Date"
             type="date"
             defaultValue="2021-09-02"
