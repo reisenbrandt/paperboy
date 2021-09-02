@@ -1,6 +1,7 @@
 export function search(state = {
   term: '',
-  category: 'Business',
+  startDate: '2021-08-02',
+  endDate: '2021-09-02',
   results: []
   }, action) {
   switch (action.type) {
@@ -8,9 +9,13 @@ export function search(state = {
       return { ...state,
         term: action.term
       }
-      case 'SET_CATEGORY':
+      case 'SET_STARTDATE':
         return { ...state,
-          category: action.category
+          startDate: action.startDate
+        }
+      case 'SET_ENDDATE':
+        return { ...state,
+          endDate: action.endDate
         }
       case 'SET_RESULTS':
         return { ...state,

@@ -36,7 +36,8 @@ const useStyles = makeStyles({
     display: "-webkit-box",
     "-webkit-box-orient": "vertical",
     "-webkit-line-clamp": 2,
-    paddingBottom: "12px"
+    paddingBottom: "12px",
+    paddingLeft: "20px"
   },
   author: {
     margin: "0"
@@ -58,9 +59,9 @@ const useStyles = makeStyles({
 
 
 export default function Results() {
-  const { category, searchTerm } = useParams();
+  const { startDate, endDate, searchTerm } = useParams();
 
-  const results = useSelector(state => state.search.results)
+  const results = useSelector(state => state.search.results);
   const dispatch = useDispatch();
   // const newsData = [
   //   {
@@ -327,12 +328,13 @@ export default function Results() {
   const classes = useStyles();
 
   useEffect(() => {
-    fetch(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&q=${searchTerm}&apiKey=c2791b40ded74e80945c31d37b320e2a`)
+    const search = encodeURIComponent(searchTerm)
+    fetch(`https://newsapi.org/v2/everything?q=${search}&from=${startDate}&to=${endDate}&apiKey=c2791b40ded74e80945c31d37b320e2a`)
       .then(res => res.json())
       .then(data => {
         dispatch(actionSetResults(data.articles))
       })
-  }, [category, searchTerm, dispatch])
+  }, [startDate, endDate, searchTerm, dispatch])
 
   function renderImage(image) {
     if (!image) {
@@ -351,15 +353,17 @@ export default function Results() {
                 {results.map((result, index) => {
                   return (<Grid key={index} item>
                     <Paper className={classes.paper}>
+                      <a href={result.url} className={classes.linkOverride}>
                       <span>
                         <Typography variant="h6" className={classes.title} title={result.title}>
-                          <a href={result.url} className={classes.linkOverride}>{result.title}</a></Typography>
+                          {result.title}</Typography>
                         <img className={classes.image} src={renderImage(result.urlToImage)} alt=""/>
                         <Typography variant="subtitle2">By: {result.author} on {moment(`${result.publishedAt}`).format('LLL')}</Typography>
                       </span>
                       <span>
                         <Typography variant="body" className={classes.description}>{result.description}</Typography> 
                       </span>
+                      </a>
                     </Paper>
                   </Grid>
                 )})}

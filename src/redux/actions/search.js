@@ -5,10 +5,17 @@ export function actionSetSearch(term) {
   }
 }
 
-export function actionSetCategory(category) {
+export function actionSetStartDate(startDate) {
   return {
-    type: 'SET_CATEGORY',
-    category
+    type: 'SET_STARTDATE',
+    startDate
+  }
+}
+
+export function actionSetEndDate(endDate) {
+  return {
+    type: 'SET_ENDDATE',
+    endDate
   }
 }
 

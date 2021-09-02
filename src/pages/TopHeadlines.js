@@ -34,7 +34,8 @@ const useStyles = makeStyles({
     display: "-webkit-box",
     "-webkit-box-orient": "vertical",
     "-webkit-line-clamp": 2,
-    paddingBottom: "12px"
+    paddingBottom: "12px",
+    paddingLeft: "20px"
   },
   author: {
     margin: "0"
